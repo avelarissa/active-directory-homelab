@@ -122,7 +122,7 @@ Windows 10 Pro
 ### F. Configure IP Addresses
 When you set the network adapter to Internal Network and start the VM for the first time, Windows will try to find a DHCP server to automatically assign an IP address. Since there is no DHCP server on an Internal Network, Windows will eventually give up and assign itself an APIPA address.
 
-You can see this by opening Command Prompt and typing ipconfig. You will likely see an IP address in the range 169.254.x.x (for example, 169.254.12.34).
+You can see this by opening Command Prompt and typing ipconfig. You will likely see an IP address in the range 169.254.x.x (for example, 169.254.101.98).
 
 <div align="right"> <details> <summary font-weight: bold;> [APIPA Address on Windows Server] </summary> <img src="images/xx-apipa-address.png" alt="APIPA address shown in ipconfig command output" width="600"> </details> </div>
 
