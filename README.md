@@ -298,3 +298,63 @@ Click Apply → OK.
 **FIGURE 4: Windows 10 desktop with whoami showing labcorp\support.admin.**
 
 ![screenshot4](images/screenshot4.png)
+
+### H. Configure Password Policy via GPO
+
+1. Go back to DC01.
+2. Open Server Manager → Tools → Group Policy Management.
+3. Expand Forest: labcorp.local → Domains → labcorp.local.
+4. Right-click labcorp.local → Create a GPO in this domain, and Link it here.
+5. Name: Password Policy → OK.
+
+<div align="right"> <details> <summary font-weight: bold;> [Creating GPO] </summary> <img src="images/22-create-gpo.png" alt="Creating Password Policy GPO" width="600"> </details> </div>
+
+6. Right-click the Password Policy GPO → Edit.
+7. Computer Configuration → Policies → Windows Settings → Security Settings → Account Policies → Password Policy
+8. Configure the following parameters:
+
+| Policy Setting                              | Value         |
+| ------------------------------------------- | ------------- |
+| Enforce password history                    | Not Defined   |
+| Maximum password age                        | Not Defined   |
+| Minimum password age                        | Not Defined   |
+| Minimum password length                     | 12 characters |
+| Minimum password length audit               | Not Defined   |
+| Password must meet complexity requirements  | Enabled       |
+| Relax minimum password length limits        | Enabled       |
+| Store passwords using reversible encryption | Disabled      |
+
+<div align="right"> <details> <summary font-weight: bold;> [Password Policy Configuration] </summary> <img src="images/23-password-policy.png" alt="Password policy settings" width="600"> </details> </div>
+
+> Note: This configuration follows modern security recommendations based on NIST guidelines, prioritizing longer passwords over frequent rotations. Password expiration and history enforcement were not configured, as they are no longer considered best practices unless required by specific environments.
+
+### I. Configure Account Lockout Policy
+1. In the same GPO editor, navigate to:
+2. Computer Configuration → Policies → Windows Settings → Security Settings → Account Policies → Account Lockout Policy.
+3. Configure the following parameters:
+
+| Policy Setting                | Value                    |
+| ----------------------------- | ------------------------ |
+| Account lockout duration      | 30 minutes               |
+| Account lockout threshold     | 5 invalid logon attempts |
+| Reset account lockout counter | 30 minutes               |
+
+<div align="right"> <details> <summary font-weight: bold;> [Account Lockout Policy] </summary> <img src="images/24-lockout-policy.png" alt="Account lockout policy settings" width="600"> </details> </div>
+
+> Note: Although NIST does not define a fixed number of failed attempts, a threshold of 5 is widely used in enterprise environments as a balance between security and usability.
+
+### J. Apply and Validate Group Policy
+1. On the CLIENT01, open Command Prompt.
+2. Run the following command:
+
+```Bash
+gpupdate /force
+```
+<div align="right"> <details> <summary font-weight: bold;> [Group Policy Update] </summary> <img src="images/25-gpupdate.png" alt="gpupdate command output" width="600"> </details> </div>
+
+4. Test the policy by attempting to:
+
+- Set a password with fewer than 12 characters (should fail).
+- Enter incorrect passwords multiple times to trigger account lockout.
+
+> Note: This step ensures that the configured policies are correctly applied and enforced on domain-joined systems.
