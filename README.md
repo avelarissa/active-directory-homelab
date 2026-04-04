@@ -127,3 +127,68 @@ You can see this by opening Command Prompt and typing ipconfig. You will likely 
 <div align="right"> <details> <summary font-weight: bold;> [APIPA Address on Windows Server] </summary> <img src="images/xx-apipa-address.png" alt="APIPA address shown in ipconfig command output" width="600"> </details> </div>
 
 > What is APIPA? APIPA stands for Automatic Private IP Addressing. It is a feature in Windows that automatically assigns an IP address from the range 169.254.0.1 to 169.254.255.254 when no DHCP server is available. APIPA allows computers on the same network segment to communicate with each other without any manual configuration. However, APIPA addresses are unpredictable and can change after a reboot. For a lab environment where our server needs to be found at a consistent address by the client, this is a problem.
+
+Windows Server 2022 (DC01)
+1. Log into the server as Administrator.
+2. Open Control Panel → Network and Sharing Center → Change adapter settings.
+3. Right-click the network adapter → Properties.
+4. Select Internet Protocol Version 4 (TCP/IPv4) → Properties.
+5. Select Use the following IP address and fill in:
+
+| Field               | Value           |
+|---------------------|-----------------|
+| IP address          | 192.168.100.10  |
+| Subnet mask         | 255.255.255.0   |
+| Default gateway     | (leave blank)   |
+| Preferred DNS server| 127.0.0.1       |
+
+6. Click OK twice.
+
+<div align="right"> <details> <summary font-weight: bold;> [Windows Server IP Configuration] </summary> <img src="images/09-winserver-ip.png" alt="Windows Server IP configuration" width="600"> </details> </div>
+
+Windows 10 Pro (CLIENT01)
+1. Log into the client.
+2. Repeat the steps above, but use:
+
+| Field               | Value           |
+|---------------------|-----------------|
+| IP address          | 192.168.100.20  |
+| Subnet mask         | 255.255.255.0   |
+| Default gateway     | (leave blank)   |
+| Preferred DNS server| 192.168.100.10  |
+
+<div align="right"> <details> <summary font-weight: bold;> [Windows 10 IP Configuration] </summary> <img src="images/10-win10-ip.png" alt="Windows 10 IP configuration" width="600"> </details> </div>
+
+### G. Validate Connectivity
+
+Ping test from client to server
+
+On CLIENT01, open Command Prompt and run:
+
+```Bash 
+ping 192.168.100.10
+```
+
+The expected result is 4 successful replies.
+
+<div align="right"> <details> <summary font-weight: bold;> [Ping Test] </summary> <img src="images/11-ping-test.png" alt="Ping result from client to server" width="600"> </details> </div>
+
+## Active Directory Configuration Procedures
+### A. Rename the Server
+1. On DC01, open Server Manager.
+2. Click Local Server in the left menu.
+3. Click the blue link next to Computer name.
+
+Click Change... → under Computer name, type DC01 → OK.
+
+Click Restart Now to reboot the server.
+
+<div align="right"> <details> <summary font-weight: bold;> [Renaming the Server] </summary> <img src="images/12-rename-server.png" alt="Renaming server to DC01" width="600"> </details> </div>
+
+### B. Install Active Directory Domain Services (AD DS) and DNS
+1. Log back into DC01.
+2. In Server Manager, click Manage → Add Roles and Features.
+3. Click Next until you reach Server Roles.
+4. Check Active Directory Domain Services → click Add Features.
+5. Check DNS Server → click Add Features.
+6. Click Next until Confirmation → click Install.
