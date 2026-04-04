@@ -178,10 +178,8 @@ The expected result is 4 successful replies.
 1. On DC01, open Server Manager.
 2. Click Local Server in the left menu.
 3. Click the blue link next to Computer name.
-
-Click Change... → under Computer name, type DC01 → OK.
-
-Click Restart Now to reboot the server.
+4. Click Change... → under Computer name, type DC01 → OK.
+5. Click Restart Now to reboot the server.
 
 <div align="right"> <details> <summary font-weight: bold;> [Renaming the Server] </summary> <img src="images/12-rename-server.png" alt="Renaming server to DC01" width="600"> </details> </div>
 
