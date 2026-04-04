@@ -126,7 +126,7 @@ You can see this by opening Command Prompt and typing ipconfig. You will likely 
 
 <div align="right"> <details> <summary font-weight: bold;> [APIPA Address on Windows Server] </summary> <img src="images/xx-apipa-address.png" alt="APIPA address shown in ipconfig command output" width="600"> </details> </div>
 
-> What is APIPA? APIPA stands for Automatic Private IP Addressing. It is a feature in Windows that automatically assigns an IP address from the range 169.254.0.1 to 169.254.255.254 when no DHCP server is available. APIPA allows computers on the same network segment to communicate with each other without any manual configuration. However, APIPA addresses are unpredictable and can change after a reboot. For a lab environment where our server needs to be found at a consistent address by the client, this is a problem.
+> What is APIPA? APIPA stands for Automatic Private IP Addressing. It is a feature in Windows that automatically assigns an IP address from the range 169.254.0.1 to 169.254.255.254 when no DHCP server is available. APIPA allows computers on the same network segment to communicate with each other without any manual configuration. However, APIPA addresses are unpredictable and can change after a reboot. For a lab environment where our server needs to be found at a consistent address by the client, this is a problem. Therefore, we will manually configure static IP addresses for both machines.
 
 Windows Server 2022 (DC01)
 1. Log into the server as Administrator.
